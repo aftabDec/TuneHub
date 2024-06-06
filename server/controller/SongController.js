@@ -5,6 +5,7 @@ const upload = require('../middleware/MiddleUpload');
 const createSong = async (req, res) => {
   upload.fields([{ name: 'image', maxCount: 1 }, { name: 'fileUrl', maxCount: 1 }])(req, res, async (err) => {
     if (err) {
+      console.error('Error during file upload:', err);
       return res.status(400).json({ error: err.message });
     }
 
@@ -19,14 +20,18 @@ const createSong = async (req, res) => {
         fileUrl: req.files.fileUrl ? `/uploads/${req.files.fileUrl[0].filename}` : undefined,
       };
 
+      console.log('Song data to be saved:', songData);
+
       const song = new Song(songData);
       await song.save();
       res.status(201).json(song);
     } catch (error) {
+      console.error('Error saving song to the database:', error);
       res.status(400).json({ error: error.message });
     }
   });
 };
+
 
 const getSongs = async (req, res) => {
   try {

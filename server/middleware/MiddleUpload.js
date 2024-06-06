@@ -6,7 +6,7 @@ const path = require('path');
 const storage = multer.diskStorage({
   destination: './uploads/',
   filename: (req, file, cb) => {
-    cb(null, file.fieldName + '-' + Date.now() + path.extname(file.originalname));
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -21,12 +21,21 @@ const upload = multer({
 
 // Check file type
 function checkFileType(file, cb) {
-  // Allowed ext
-  const filetypes = /jpeg|jpg|png|mp3|wav/;
-  // Check ext
+  // Allowed extensions
+  const filetypes = /jpeg|jpg|m4a|png|mp3|wav/;
+  // Check extension
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  // Check mime
-  const mimetype = filetypes.test(file.mimetype);
+
+  // Allowed mimetypes
+  const mimetypes = /image\/jpeg|image\/jpg|audio\/x-m4a|image\/png|audio\/mpeg|audio\/wav/;
+  // Check mimetype
+  const mimetype = mimetypes.test(file.mimetype);
+
+  // Debugging logs to understand the issue
+  console.log('File originalname:', file.originalname);
+  console.log('File mimetype:', file.mimetype);
+  console.log('File extension check:', extname);
+  console.log('File mimetype check:', mimetype);
 
   if (mimetype && extname) {
     return cb(null, true);
