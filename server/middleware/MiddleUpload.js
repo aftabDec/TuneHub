@@ -27,7 +27,7 @@ function checkFileType(file, cb) {
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
   // Allowed mimetypes
-  const mimetypes = /image\/jpeg|image\/jpg|audio\/x-m4a|image\/png|audio\/mpeg|audio\/wav/;
+const mimetypes = /image\/jpeg|image\/jpg|audio\/x-m4a|image\/png|audio\/mpeg|audio\/wav|video\/mp4|video\/webm|audio\/mp4/;
   // Check mimetype
   const mimetype = mimetypes.test(file.mimetype);
 

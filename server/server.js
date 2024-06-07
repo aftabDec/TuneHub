@@ -6,19 +6,26 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const songRoutes = require('./routes/songsRoute');
 const authRoutes = require('./routes/userRoute')
+const playlistRoutes = require('./routes/playlistRoute');
+const albumRoute = require('./routes/AlbumRoute')
+const artistRoute = require('./routes/ArtistRoute')
 const path = require('path');
 const fs = require('fs');
 const jwt = require('jsonwebtoken'); 
 
+
 dotenv.config();
+
 
 const app = express();
 const port = process.env.PORT || 5000;
+
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+
 
 // Ensuring the uploads directory exists
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -26,15 +33,23 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
 
+
 // Serve static files from the uploads directory
 app.use('/uploads', express.static(uploadsDir));
 
+
+
 // Routes
 app.use('/api/songs', songRoutes);
-// Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/playlists', playlistRoutes);
+app.use('/api', albumRoute);
+app.use('/api', artistRoute);
+
+
 
 // Middleware to check token and admin status
+
 const auth = (req, res, next) => {
   const token = req.header('x-auth-token');
   if (!token) {
@@ -55,11 +70,15 @@ const adminAuth = (req, res, next) => {
   }
   next();
 };
+// Export auth middleware
+module.exports = { app, auth };
 
 // Admin Route
 app.get('/admin', auth, adminAuth, (req, res) => {
   res.send('Welcome Admin');
 });
+
+
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {
@@ -68,8 +87,11 @@ mongoose.connect(process.env.MONGO_URI, {
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
+
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-module.exports = {auth}
+
+
