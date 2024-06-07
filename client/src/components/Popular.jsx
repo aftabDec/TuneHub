@@ -3,7 +3,7 @@ import { FaCirclePlay } from "react-icons/fa6";
 
 const PopularSection = () => {
   return (
-    <div className="rounded-3xl shadow-lg bg-gradient-to-r from-purple-900 to-black p-4 h-[430px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+    <div className="rounded-3xl shadow-lg bg-gradient-to-r from-purple-900 to-black p-4 h-[430px] overflow-y-auto scrollbar-thin scrollbar-thumb-custom scrollbar-thumb-gray-600 scrollbar-track-gray-800">
       <p className="float-right cursor-pointer mb-4 text-white">Show all</p>
       <h2 className="text-xl font-bold mb-4 text-white">Popular 🔥</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
