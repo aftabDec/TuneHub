@@ -6,14 +6,18 @@
 .scrollbar-hide::-webkit-scrollbar {
   width: 0px;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just to make sure */
+  
 }
 
 .scrollbar-thumb-custom {
   scrollbar-color: #8200cd transparent; /* Firefox */
   scrollbar-width: thin;  /* Firefox */
+  
+  
 }
 
 .scrollbar-thumb-custom::-webkit-scrollbar {
+  
   width: 5px;
 }
 
@@ -24,4 +28,5 @@
 
 .scrollbar-thumb-custom::-webkit-scrollbar-track {
   background: transparent; 
+  
 }

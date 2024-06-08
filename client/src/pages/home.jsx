@@ -1,6 +1,6 @@
 import React from "react";
 import SideHeader from "../components/SideHeader";
-import PopularSection from "../components/Popular";
+import SongSection from "../components/SongSection";
 import MusicPlayer from "../components/MusicPlay";
 import Carousal from "../components/Carousal";
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
       {/* Main Content */}
       <div className="flex-1">
         <Carousal />
-        <PopularSection />
+        <SongSection />
       </div>
 
       {/* Music Player */}
