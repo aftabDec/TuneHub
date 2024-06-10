@@ -4,7 +4,7 @@ import LoginPopup from "./LoginPopup";
 import { useSelector } from "react-redux";
 
 const SideHeader = () => {
-  const { authUser } = useSelector((store) => store.user);
+  const { authUser } = useSelector((store) => store.auth);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const handleLoginClick = () => {

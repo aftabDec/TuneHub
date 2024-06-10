@@ -28,6 +28,7 @@ function checkFileType(file, cb) {
 
   // Allowed mimetypes
 const mimetypes = /image\/jpeg|image\/jpg|audio\/x-m4a|image\/png|audio\/mpeg|audio\/wav|video\/mp4|video\/webm|audio\/mp4/;
+
   // Check mimetype
   const mimetype = mimetypes.test(file.mimetype);
 

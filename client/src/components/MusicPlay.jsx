@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   FaPlay,
   FaPause,
@@ -6,18 +6,27 @@ import {
   FaStepBackward,
   FaHeart,
 } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(200); // Set the duration of the song in seconds
+  const [duration, setDuration] = useState(0); // Duration will be set dynamically
+  const audioRef = useRef(null);
 
   const handlePlayPause = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
     setIsPlaying(!isPlaying);
   };
 
   const handleRangeChange = (e) => {
-    setCurrentTime((e.target.value / 100) * duration);
+    const newTime = (e.target.value / 100) * duration;
+    setCurrentTime(newTime);
+    audioRef.current.currentTime = newTime;
   };
 
   // Format time to mm:ss
@@ -28,41 +37,54 @@ const MusicPlayer = () => {
   };
 
   useEffect(() => {
-    let interval = null;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime((prevTime) => {
-          if (prevTime < duration) {
-            return prevTime + 1;
-          } else {
-            clearInterval(interval);
-            setIsPlaying(false);
-            return prevTime;
-          }
-        });
-      }, 1000);
-    } else if (!isPlaying && currentTime !== 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, currentTime, duration]);
+    const audio = audioRef.current;
+
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    const handleError = (e) => {
+      console.error("Error loading audio source", e);
+    };
+
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("error", handleError);
+
+    return () => {
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("error", handleError);
+    };
+  }, []);
+
+  const selectedSong = useSelector((state) => state.song.selectedSong);
+
+  if (!selectedSong) return <div>No song selected</div>;
+
+  const audioUrl = `http://localhost:5000${selectedSong.fileUrl}`;
+  console.log("Selected song URL:", audioUrl);
 
   return (
     <div className="h-full w-full bg-black text-white p-4 flex flex-col items-center rounded-3xl shadow-lg">
       <div className="w-full mb-4">
         <img
-          src="/robin4.png"
+          src={selectedSong.image}
           alt="Cover"
           className="w-full h-72 object-cover rounded-lg"
         />
       </div>
       <div className="flex items-center justify-between w-full px-2 mb-2">
-        <h2 className="text-xl font-bold">Welcome to my world</h2>
+        <h2 className="text-xl font-bold">{selectedSong.title}</h2>
         <button className="text-red-500">
           <FaHeart size={24} />
         </button>
       </div>
-      <p className="text-gray-400 float-left">Artist</p>
+      <p className="text-gray-400 float-left">{selectedSong.artist}</p>
 
       <div className="w-full mt-4">
         <input
@@ -90,7 +112,7 @@ const MusicPlayer = () => {
           <FaStepForward size={20} />
         </button>
       </div>
-      {/* Add more player controls and details here */}
+      <audio ref={audioRef} src={selectedSong.fileUrl} />
     </div>
   );
 };

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { setAuthUser } from "../redux/SongSlice";
+import { setAuthUser } from "../redux/authSlice";
 import { useDispatch } from "react-redux";
+import { useAuth } from "../Context/AuthContext";
 
 const LoginForm = () => {
+  const { login } = useAuth();
+
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -35,7 +38,9 @@ const LoginForm = () => {
       );
       navigate("/");
       console.log(res);
-      dispatch(setAuthUser(res.data));
+      const { token, isAdmin } = res.data;
+      login(token, isAdmin);
+      dispatch(setAuthUser({ token, isAdmin }));
     } catch (error) {
       console.log(error);
     }

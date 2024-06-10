@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, } = req.body;
   try {
     const user = await User.findOne({ username });
     if (!user) {
@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
       return res.status(400).send('Invalid credentials');
     }
     const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, 'your_jwt_secret', { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, isAdmin: user.isAdmin });
   } catch (err) {
     res.status(400).send('Error logging in');
   }
