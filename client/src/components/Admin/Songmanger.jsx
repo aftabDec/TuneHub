@@ -67,10 +67,11 @@ const SongManager = () => {
   return (
     <div>
       <h1>Song List</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="grid grid-cols-3 gap-5" onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
+          className="file-input  file-input-bordered p-3 file-input-primary w-full max-w-xs"
           placeholder="Title"
           value={newSong.title}
           onChange={handleChange}
@@ -78,6 +79,7 @@ const SongManager = () => {
         <input
           type="text"
           name="artist"
+          className="file-input file-input-bordered p-3 file-input-primary w-full max-w-xs"
           placeholder="Artist"
           value={newSong.artist}
           onChange={handleChange}
@@ -86,23 +88,27 @@ const SongManager = () => {
           type="text" // Correct the input type to "text"
           name="album" // Correct the name attribute
           placeholder="Album"
+          className="file-input file-input-bordered p-3 file-input-primary w-full max-w-xs"
           value={newSong.album}
           onChange={handleChange}
         />
         <input
           type="file"
+          className="file-input file-input-bordered p-3 file-input-primary w-full max-w-xs"
           placeholder="Add Image"
           onChange={handleFileChange}
         />
         <input
           type="file"
           name="fileUrl"
+          className="file-input file-input-bordered p-3 file-input-primary w-full max-w-xs"
           placeholder="Song File"
           onChange={handleSongFileChange}
         />
         <input
           type="text"
           name="releaseDate"
+          className="file-input file-input-bordered p-3 file-input-primary w-full max-w-xs"
           placeholder="Release Date"
           value={newSong.releaseDate}
           onChange={handleChange}
@@ -110,11 +116,14 @@ const SongManager = () => {
         <input
           type="text"
           name="genre"
+          className="file-input file-input-bordered p-3 file-input-primary w-full max-w-xs"
           placeholder="Genre"
           value={newSong.genre}
           onChange={handleChange}
         />
-        <button type="submit">Add Song</button>
+        <button className="btn btn-primary max-w-52" type="submit">
+          Add Song
+        </button>
       </form>
       <ul>
         {songs.map((song, index) => (
@@ -124,7 +133,6 @@ const SongManager = () => {
         ))}
       </ul>
     </div>
-    
   );
 };
 

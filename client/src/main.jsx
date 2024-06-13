@@ -12,12 +12,10 @@ let persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <React.StrictMode>
-      <AuthProvider>
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </AuthProvider>
-    </React.StrictMode>
+    <AuthProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </AuthProvider>
   </Provider>
 );

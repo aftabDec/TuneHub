@@ -8,6 +8,12 @@ import RegisterForm from "./pages/register";
 import LoginForm from "./pages/login";
 import Admin from "./pages/Admin";
 import { useSelector } from "react-redux";
+import CreatePlayList from "./components/CreatePlayList";
+import SideHeader from "./components/SideHeader";
+import MusicPlayer from "./components/MusicPlay";
+import Layout from "./components/layout";
+import Carousal from "./components/Carousal";
+import SongSection from "./components/SongSection";
 
 const App = () => {
   const authUser = useSelector((state) => state.auth.authUser);
@@ -15,7 +21,22 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: (
+            <>
+              <Carousal />
+              <SongSection />
+            </>
+          ),
+        },
+        {
+          path: "/playlist",
+          element: <CreatePlayList />,
+        },
+      ],
     },
     {
       path: "/login",
@@ -26,7 +47,7 @@ const App = () => {
       element: <RegisterForm />,
     },
     {
-      path: "/admin",
+      path: "/admin/*",
       element:
         authUser && authUser.isAdmin ? (
           <Admin />
@@ -36,11 +57,7 @@ const App = () => {
     },
   ]);
 
-  return (
-    <div className="">
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

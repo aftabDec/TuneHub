@@ -5,6 +5,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
 
+// Environment variable for JWT secret
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
+
 exports.register = async (req, res) => {
   const { username, password, isAdmin } = req.body;
   try {
@@ -27,9 +30,10 @@ exports.login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).send('Invalid credentials');
     }
-    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, 'your_jwt_secret', { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, JWT_SECRET, { expiresIn: '1h' });
     res.json({ token, isAdmin: user.isAdmin });
   } catch (err) {
-    res.status(400).send('Error logging in');
+    console.error('Error logging in:', err);
+    res.status(500).send('Server error');
   }
 };

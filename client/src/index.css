@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* styles.css */
 .scrollbar-hide::-webkit-scrollbar {
   width: 0px;  /* Remove scrollbar space */
@@ -10,7 +11,7 @@
 }
 
 .scrollbar-thumb-custom {
-  scrollbar-color: #8200cd transparent; /* Firefox */
+  scrollbar-color: #5700c2 transparent; /* Firefox */
   scrollbar-width: thin;  /* Firefox */
   
   
@@ -30,3 +31,76 @@
   background: transparent; 
   
 }
+
+/* Ensure the main content area and the music player have the desired styles */
+.flex {
+  display: flex;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+.bg-{
+  background-color: #0d0d0d;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-custom {
+  scrollbar-color: #5d3fd3 #120021;
+}
+
+.scrollbar-thumb-gray-600 {
+  scrollbar-thumb-color: #4a5568; /* Replace with your custom color */
+}
+
+.scrollbar-track-gray-900 {
+  scrollbar-track-color: #1a202c; /* Replace with your custom color */
+}
+
+.range-xs1 {
+    height: 10px;
+}
+.range-xs1::-webkit-slider-runnable-track {
+    height: 0.25rem/* 4px */;
+}
+.range-xs1::-moz-range-track {
+    height: 3px/* 4px */;
+}
+.range-xs1::-webkit-slider-thumb {
+    height: 1rem/* 16px */;
+    width: 1rem/* 16px */;
+    --filler-offset: 0.4rem/* 6.4px */;
+}
+.range-xs1::-moz-range-thumb {
+    height: 1rem/* 16px */;
+    width: 1rem/* 16px */;
+    --filler-offset: 0.4rem/* 6.4px */;
+}
+.volume-slider {
+  background: linear-gradient(to right, #5D3FD3, #120021);
+  width: 100px; /* Adjust the length as needed */
+  height: 20px; /* Adjust the thickness as needed */
+}
+
+.group:hover .volume-slider {
+  opacity: 1;
+  width: 100px; /* Adjust the width as needed */
+  height: 10px; /* Adjust the thickness as needed */
+}
+

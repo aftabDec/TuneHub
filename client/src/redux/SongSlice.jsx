@@ -6,6 +6,8 @@ const SongSlice = createSlice({
     authUser: null,
     otherSongs: null,
     selectedSong: null,
+    isPlaying: false,
+    otherPlayList: null,
   },
   reducers: {
     setAuthUser: (state, action) => {
@@ -16,8 +18,21 @@ const SongSlice = createSlice({
     },
     setSelectedSong: (state, action) => {
       state.selectedSong = action.payload;
+      state.isPlaying = true; // Start playing when a new song is selected
+    },
+    togglePlayPause: (state) => {
+      state.isPlaying = !state.isPlaying;
+    },
+    getPlaylist: (state, action) => {
+      state.otherPlayList = action.payload;
     },
   },
 });
-export const { setAuthUser, setOtherSong, setSelectedSong } = SongSlice.actions;
+export const {
+  setAuthUser,
+  setOtherSong,
+  getPlaylist,
+  setSelectedSong,
+  togglePlayPause,
+} = SongSlice.actions;
 export default SongSlice.reducer;

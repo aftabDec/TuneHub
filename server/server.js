@@ -13,6 +13,7 @@ const path = require('path');
 const cookieParse = require('cookie-parser')
 const fs = require('fs');
 const jwt = require('jsonwebtoken'); 
+const {auth} = require('./middleware/AuthMiddle')
 
 const app = express();
 dotenv.config();
@@ -57,21 +58,7 @@ app.use('/api', artistRoute);
 
 
 
-// Middleware to check token and admin status
 
-const auth = (req, res, next) => {
-  const token = req.header('x-auth-token');
-  if (!token) {
-    return res.status(401).send('No token, authorization denied');
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); 
-    req.user = decoded;
-    next();
-  } catch (err) {
-    res.status(401).send('Token is not valid');
-  }
-};
 
 const adminAuth = (req, res, next) => {
   if (!req.user.isAdmin) {
@@ -79,8 +66,7 @@ const adminAuth = (req, res, next) => {
   }
   next();
 };
-// Export auth middleware
-module.exports = { app, auth };
+
 
 // Admin Route
 app.get('/admin', auth, adminAuth, (req, res) => {

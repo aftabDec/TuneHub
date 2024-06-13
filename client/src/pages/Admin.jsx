@@ -10,17 +10,18 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 const AdminPage = () => {
   return (
     <div className="flex min-h-screen bg-black text-white">
-      <div className="p-4   space-y-4">
+      <div className="p-4 space-y-4">
         <Sidebar />
       </div>
-
       <div className="flex-1 flex flex-col p-4 space-y-4">
         <Header />
         <main className="flex-1 space-y-4">
-          <UserList />
-          <SongManager />
-          {/* <AlbumManager />
-          <ArtistManager /> */}
+          <Routes>
+            <Route path="users" element={<UserList />} />
+            <Route path="songs" element={<SongManager />} />
+            <Route path="albums" element={<AlbumManager />} />
+            <Route path="artists" element={<ArtistManager />} />
+          </Routes>
         </main>
       </div>
     </div>

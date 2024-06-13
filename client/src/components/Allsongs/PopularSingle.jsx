@@ -17,7 +17,7 @@ const PopularSingle = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <PopularSongs songs={popularSongs} onSongClick={handleSongClick} />
     </div>
   );
