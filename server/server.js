@@ -14,6 +14,7 @@ const cookieParse = require('cookie-parser')
 const fs = require('fs');
 const jwt = require('jsonwebtoken'); 
 const {auth} = require('./middleware/AuthMiddle')
+require('dotenv').config();
 
 const app = express();
 dotenv.config();

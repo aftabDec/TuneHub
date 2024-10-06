@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { UseGetPlaylist } from "../hook/GetPlaylist";
 
 const Playlist = () => {
   const items = [
@@ -19,6 +20,7 @@ const Playlist = () => {
     },
     // Add more items as needed
   ];
+  UseGetPlaylist();
 
   return (
     <div className="my-7 flex flex-col justify-center cursor-pointer items-center">

@@ -4,6 +4,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../model/user');
+require('dotenv').config();
 
 // Environment variable for JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';

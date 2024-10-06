@@ -1,5 +1,6 @@
 // Middleware to check token and admin status
 const jwt = require('jsonwebtoken'); 
+require('dotenv').config();
 const auth = (req, res, next) => {
   const token = req.header('x-auth-token');
   if (!token) {
